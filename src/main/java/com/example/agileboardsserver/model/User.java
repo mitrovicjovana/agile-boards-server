@@ -11,7 +11,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder
 @Entity
 @Table(
         name = "user",
@@ -37,6 +36,9 @@ public class User implements Serializable {
 
     @Column(name = "email", nullable = false, columnDefinition = "VARCHAR(255)")
     private String email;
+
+    @Column(name = "password", nullable = false, columnDefinition = "VARCHAR(255)")
+    private String password;
 
     @Column(name = "enabled")
     private boolean isEnabled;
