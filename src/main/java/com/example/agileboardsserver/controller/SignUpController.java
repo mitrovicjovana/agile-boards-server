@@ -9,18 +9,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/auth/signup")
+@RequestMapping("/api/auth")
 public class SignUpController {
 
     private final SignUpService signUpService;
 
-    @PostMapping()
+    @PostMapping("/signup")
     public ResponseEntity<String> signUp(@RequestBody RegistrationRequest registrationRequest){
-        signUpService.signUp(registrationRequest);
-        return new ResponseEntity<>("User registration successful", CREATED);
+        try{
+            signUpService.signUp(registrationRequest);
+            return new ResponseEntity<>("User registration successful", CREATED);
+        }catch (Exception exception){
+            return new ResponseEntity<>(exception.getMessage(), BAD_REQUEST);
+        }
     }
 }

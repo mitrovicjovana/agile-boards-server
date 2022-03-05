@@ -1,10 +1,9 @@
 package com.example.agileboardsserver.service;
 
 import com.example.agileboardsserver.dto.RegistrationRequest;
+import com.example.agileboardsserver.model.ConfirmationToken;
 import com.example.agileboardsserver.model.User;
-import com.example.agileboardsserver.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -13,33 +12,27 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 public class SignUpService {
 
-    private final BCryptPasswordEncoder passwordEncoder;
-    private final UserRepository userRepository;
+    private final UserService userService;
+    private final ConfirmationTokenService confirmationTokenService;
 
     @Transactional
     public void signUp(RegistrationRequest registrationRequest){
-        boolean usernameExists =  userRepository.findByUsername(registrationRequest.getUsername()).isPresent();
-        boolean emailExists = userRepository.findByEmail(registrationRequest.getEmail()).isPresent();
+        // Check if username or email are already in use
+        boolean usernameExists =  userService.findByUsername(registrationRequest.getUsername()).isPresent();
+        boolean emailExists = userService.findByEmail(registrationRequest.getEmail()).isPresent();
 
         if(usernameExists){
             throw new IllegalStateException("Username " + registrationRequest.getUsername() + " is already taken.");
         }else if(emailExists){
-            throw new IllegalStateException("Email " + registrationRequest.getEmail() + "is already in use.");
+            throw new IllegalStateException("Email " + registrationRequest.getEmail() + " is already in use.");
         }else{
-            saveNewUser(registrationRequest);
+            // Save new user to database
+            User user = userService.saveNewUser(registrationRequest);
+
+            // Generate and save token for given user
+            ConfirmationToken token = confirmationTokenService.generateConfirmationToken(user);
+
+            // Send confirmation email
         }
-    }
-
-    private void saveNewUser(RegistrationRequest registrationRequest) {
-        User user = new User();
-
-        user.setFirstName(registrationRequest.getFirstName());
-        user.setLastName(registrationRequest.getLastName());
-        user.setUsername(registrationRequest.getUsername());
-        user.setEmail(registrationRequest.getEmail());
-        user.setEnabled(false);
-        user.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
-
-        userRepository.save(user);
     }
 }
