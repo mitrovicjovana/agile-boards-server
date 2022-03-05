@@ -11,13 +11,26 @@ import javax.transaction.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class AuthService {
+public class SignUpService {
 
     private final BCryptPasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
     @Transactional
     public void signUp(RegistrationRequest registrationRequest){
+        boolean usernameExists =  userRepository.findByUsername(registrationRequest.getUsername()).isPresent();
+        boolean emailExists = userRepository.findByEmail(registrationRequest.getEmail()).isPresent();
+
+        if(usernameExists){
+            throw new IllegalStateException("Username " + registrationRequest.getUsername() + " is already taken.");
+        }else if(emailExists){
+            throw new IllegalStateException("Email " + registrationRequest.getEmail() + "is already in use.");
+        }else{
+            saveNewUser(registrationRequest);
+        }
+    }
+
+    private void saveNewUser(RegistrationRequest registrationRequest) {
         User user = new User();
 
         user.setFirstName(registrationRequest.getFirstName());
