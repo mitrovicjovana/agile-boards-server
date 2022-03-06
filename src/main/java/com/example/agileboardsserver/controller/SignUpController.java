@@ -27,8 +27,8 @@ public class SignUpController {
         }
     }
 
-    @GetMapping("/verify/{token}")
-    public ResponseEntity<String> verifyAccount(@PathVariable String token){
+    @GetMapping("/confirm")
+    public ResponseEntity<String> verifyAccount(@RequestParam String token){
         try{
             signUpService.verifyAccount(token);
             return new ResponseEntity<>("Account activated", OK);

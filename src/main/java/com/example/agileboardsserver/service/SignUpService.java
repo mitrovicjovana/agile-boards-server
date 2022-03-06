@@ -20,7 +20,7 @@ public class SignUpService {
 
     @Transactional
     public void signUp(RegistrationRequest registrationRequest){
-        String confirmationURL = "http://localhost:8080/api/auth/verify";
+        String confirmationURL = "http://localhost:8080/api/auth/confirm?token=";
 
         // Check if username or email are already in use
         boolean usernameExists =  userService.findByUsername(registrationRequest.getUsername()).isPresent();
