@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -16,6 +17,7 @@ public class ConfirmationTokenService {
     private final ConfiramtionTokenRepository confiramtionTokenRepository;
 
     public ConfirmationToken generateConfirmationToken(User user) {
+        // Generate new token
         ConfirmationToken confirmationToken = new ConfirmationToken();
 
         confirmationToken.setToken(UUID.randomUUID().toString());
@@ -23,6 +25,15 @@ public class ConfirmationTokenService {
         confirmationToken.setExpiresAt(LocalDateTime.now().plusMinutes(60));
         confirmationToken.setUser(user);
 
+        // Save token
         return confiramtionTokenRepository.save(confirmationToken);
+    }
+
+    public Optional<ConfirmationToken> findByToken(String token){
+        return confiramtionTokenRepository.findByToken(token);
+    }
+
+    public void deleteToken(ConfirmationToken confirmationToken){
+        confiramtionTokenRepository.delete(confirmationToken);
     }
 }

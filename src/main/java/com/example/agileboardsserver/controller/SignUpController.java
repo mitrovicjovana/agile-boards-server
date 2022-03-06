@@ -4,13 +4,11 @@ import com.example.agileboardsserver.dto.RegistrationRequest;
 import com.example.agileboardsserver.service.SignUpService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,6 +23,16 @@ public class SignUpController {
             signUpService.signUp(registrationRequest);
             return new ResponseEntity<>("User registration successful", CREATED);
         }catch (Exception exception){
+            return new ResponseEntity<>(exception.getMessage(), BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/verify/{token}")
+    public ResponseEntity<String> verifyAccount(@PathVariable String token){
+        try{
+            signUpService.verifyAccount(token);
+            return new ResponseEntity<>("Account activated", OK);
+        }catch(Exception exception){
             return new ResponseEntity<>(exception.getMessage(), BAD_REQUEST);
         }
     }

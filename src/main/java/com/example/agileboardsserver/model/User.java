@@ -15,7 +15,8 @@ import java.util.UUID;
 @Table(
         name = "user",
         uniqueConstraints = {
-            @UniqueConstraint(name="email_constraint", columnNames = "email")
+                @UniqueConstraint(name="email_constraint", columnNames = "email"),
+                @UniqueConstraint(name="username_constraint", columnNames = "username")
 })
 public class User implements Serializable {
 
