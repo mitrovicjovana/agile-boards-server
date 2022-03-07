@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class SignUpService {
+public class AuthService {
 
     private final UserService userService;
     private final ConfirmationTokenService confirmationTokenService;

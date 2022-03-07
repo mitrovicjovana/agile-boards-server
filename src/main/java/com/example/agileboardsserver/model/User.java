@@ -43,4 +43,5 @@ public class User implements Serializable {
 
     @Column(name = "enabled")
     private Boolean isEnabled;
+
 }
