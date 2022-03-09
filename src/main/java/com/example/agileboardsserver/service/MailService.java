@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MailService {
 
+    // TODO: Add HTML template for mail
+
     private final JavaMailSender mailSender;
 
     @Async

@@ -1,4 +1,4 @@
-package com.example.agileboardsserver.config;
+package com.example.agileboardsserver.security.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
