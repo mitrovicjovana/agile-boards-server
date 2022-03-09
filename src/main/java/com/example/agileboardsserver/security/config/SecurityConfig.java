@@ -1,5 +1,6 @@
 package com.example.agileboardsserver.security.config;
 
+import com.example.agileboardsserver.security.jwt.JwtAuthenticationFilter;
 import com.example.agileboardsserver.security.service.UserPrincipalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static org.springframework.security.config.BeanIds.AUTHENTICATION_MANAGER;
 
@@ -19,6 +21,7 @@ import static org.springframework.security.config.BeanIds.AUTHENTICATION_MANAGER
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserPrincipalService userPrincipalService;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -32,6 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .permitAll()
                         .anyRequest()
                         .authenticated());
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override

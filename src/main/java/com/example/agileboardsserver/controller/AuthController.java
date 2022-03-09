@@ -38,12 +38,6 @@ public class AuthController {
 
     @PostMapping("/login")
     private ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
-//        try {
-//            authService.login(loginRequest);
-//            return new ResponseEntity<>("Token i guess", OK);
-//        } catch (Exception exception) {
-//            return new ResponseEntity<>(exception.getMessage(), UNAUTHORIZED);
-//        }
         return new ResponseEntity<>(authService.login(loginRequest), OK);
     }
 }
