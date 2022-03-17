@@ -22,18 +22,17 @@ public class ConfirmationTokenService {
 
         confirmationToken.setToken(UUID.randomUUID().toString());
         confirmationToken.setCreatedAt(LocalDateTime.now());
-        confirmationToken.setExpiresAt(LocalDateTime.now().plusMinutes(60));
         confirmationToken.setUser(user);
 
         // Save token
         return confiramtionTokenRepository.save(confirmationToken);
     }
 
-    public Optional<ConfirmationToken> findByToken(String token){
+    public Optional<ConfirmationToken> findByToken(String token) {
         return confiramtionTokenRepository.findByToken(token);
     }
 
-    public void deleteToken(ConfirmationToken confirmationToken){
+    public void deleteToken(ConfirmationToken confirmationToken) {
         confiramtionTokenRepository.delete(confirmationToken);
     }
 }

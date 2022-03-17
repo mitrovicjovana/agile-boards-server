@@ -1,5 +1,6 @@
 package com.example.agileboardsserver.model;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,22 +18,25 @@ import static javax.persistence.FetchType.LAZY;
 @Getter
 @Setter
 @Entity
-@Table(name = "confirmation_token")
-public class ConfirmationToken {
-
+@Table(name = "project")
+public class Project {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "token_id", columnDefinition = "BINARY(16)", updatable = false, unique = true)
+    @Column(name = "project_id", columnDefinition = "BINARY(16)", updatable = false, unique = true)
     private UUID id;
 
-    @Column(name = "token", nullable = false)
-    private String token;
+    @Column(name = "name", nullable = false, columnDefinition = "VARCHAR(255)")
+    private String name;
+
+    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
+    private String description;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @JoinColumn(name = "owner_username", referencedColumnName = "username")
+    @ManyToOne(fetch = LAZY, cascade = CascadeType.DETACH)
     private User user;
+
 }

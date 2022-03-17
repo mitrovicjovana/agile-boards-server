@@ -10,7 +10,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -22,12 +21,7 @@ public class UserService {
     private final ConfirmationTokenService confirmationTokenService;
 
     @Transactional
-    public void enableUser(ConfirmationToken token){
-        // Check if token is expired
-        if(token.getExpiresAt().isBefore(LocalDateTime.now())) {
-            throw new IllegalStateException("Token has expired");
-        }else{
-
+    public void enableUser(ConfirmationToken token) {
         // Enable user
         String username = token.getUser().getUsername();
         User user = userRepository
@@ -39,7 +33,6 @@ public class UserService {
 
         // Delete token
         confirmationTokenService.deleteToken(token);
-        }
     }
 
     public User saveNewUser(RegistrationRequest registrationRequest) {
@@ -62,4 +55,13 @@ public class UserService {
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+
+    public Boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
+    public Boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
 }
