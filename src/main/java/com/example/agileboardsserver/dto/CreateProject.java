@@ -9,7 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ProjectDto {
+public class CreateProject {
     private String name;
     private String description;
 }

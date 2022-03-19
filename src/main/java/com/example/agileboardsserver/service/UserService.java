@@ -42,7 +42,7 @@ public class UserService {
         user.setLastName(registrationRequest.getLastName());
         user.setUsername(registrationRequest.getUsername());
         user.setEmail(registrationRequest.getEmail());
-        user.setIsEnabled(false);
+        user.setIsEnabled(true);
         user.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
 
         return userRepository.save(user);

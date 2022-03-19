@@ -29,8 +29,8 @@ public class UserController {
     }
 
     @GetMapping
-    public String test() {
-        return SecurityContextHolder.getContext().getAuthentication().getName();
+    public ResponseEntity<String> getUsername() {
+        return new ResponseEntity<>(SecurityContextHolder.getContext().getAuthentication().getName(), OK);
     }
 
 }
