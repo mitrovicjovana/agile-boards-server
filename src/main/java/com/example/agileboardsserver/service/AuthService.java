@@ -65,4 +65,8 @@ public class AuthService {
         confirmationToken.orElseThrow(() -> new RuntimeException("Invalid token"));
         userService.enableUser(confirmationToken.get());
     }
+
+    public void logout() {
+        SecurityContextHolder.clearContext();
+    }
 }

@@ -28,7 +28,7 @@ public class UserController {
         return new ResponseEntity<>(userService.existsByUsername(username).toString(), OK);
     }
 
-    @GetMapping
+    @GetMapping("/username")
     public ResponseEntity<String> getUsername() {
         return new ResponseEntity<>(SecurityContextHolder.getContext().getAuthentication().getName(), OK);
     }

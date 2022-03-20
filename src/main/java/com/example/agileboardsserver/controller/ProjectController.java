@@ -33,18 +33,24 @@ public class ProjectController {
         return new ResponseEntity<>(projectService.createProject(project), OK);
     }
 
-    @PostMapping("/name/{id}")
-    public ResponseEntity<Integer> updateName(@PathVariable String id, @RequestBody String name) {
-        return new ResponseEntity<>(projectService.updateNameById(id, name), OK);
-    }
-
-    @PostMapping("/description/{id}")
-    public ResponseEntity<Integer> updateDescription(@PathVariable String id, @RequestBody String description) {
-        return new ResponseEntity<>(projectService.updateDescriptionById(id, description), OK);
-    }
-
-    @DeleteMapping("/remove/{id}")
+    @DeleteMapping("/{id}")
     public void removeProject(@PathVariable String id) {
         projectService.deleteProject(id);
     }
+
+    @PutMapping
+    public ResponseEntity<Project> updateProject(@RequestBody Project project) {
+        return new ResponseEntity<>(projectService.update(project), OK);
+    }
+
+//    @PostMapping("/name/{id}")
+//    public ResponseEntity<Integer> updateName(@PathVariable String id, @RequestBody String name) {
+//        return new ResponseEntity<>(projectService.updateNameById(id, name), OK);
+//    }
+//
+//    @PostMapping("/description/{id}")
+//    public ResponseEntity<Integer> updateDescription(@PathVariable String id, @RequestBody String description) {
+//        return new ResponseEntity<>(projectService.updateDescriptionById(id, description), OK);
+//    }
+
 }

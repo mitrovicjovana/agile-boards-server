@@ -59,4 +59,9 @@ public class ProjectService {
         return projectRepository.updateDescriptionById(UUID.fromString(id), description);
     }
 
+    @Transactional
+    public Project update(Project project) {
+        return projectRepository.save(project);
+    }
+
 }

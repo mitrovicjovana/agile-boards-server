@@ -20,7 +20,7 @@ public class JwtProvider {
     private final String secret = "abc";
     private final Algorithm algorithm = HMAC512(secret);
     //    @Value("${jwt.expiration.time}")
-    private final long jwtExpirationTime = 8640000;
+    private final long jwtExpirationTime = 864000000;
 
     public String generateJwtToken(Authentication authentication) {
         UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
