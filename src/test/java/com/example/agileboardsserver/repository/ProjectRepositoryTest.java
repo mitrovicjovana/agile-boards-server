@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,11 +20,40 @@ class ProjectRepositoryTest {
     private ProjectRepository projectRepositoryTest;
 
     @Autowired
-    private UserRepository userRepositoryTest;
+    private UserRepository userRepository;
 
     @AfterEach
     void tearDown(){
-        projectRepositoryTest.deleteAll();;
+        projectRepositoryTest.deleteAll();
+    }
+
+    @Test
+    void itShouldFindProjectsBySearchTerm(){
+        User user = new User(
+                null,
+                "Name",
+                "Surname",
+                "Username",
+                "mail@mail.com",
+                "password",
+                true
+        );
+
+        userRepository.save(user);
+
+        Project project = new Project(
+                null,
+                "Project name",
+                "This is description.",
+                LocalDateTime.now(),
+                user
+        );
+
+        UUID projectId = projectRepositoryTest.save(project).getId();
+
+        List<Project> projectList = projectRepositoryTest.findProjectsBySearchTerm("Project", user.getUsername());
+
+        assertTrue(projectList.contains(project));
     }
 
     @Test
@@ -38,7 +68,7 @@ class ProjectRepositoryTest {
                 true
         );
 
-        userRepositoryTest.save(user);
+        userRepository.save(user);
 
         Project project = new Project(
                 null,
@@ -70,7 +100,7 @@ class ProjectRepositoryTest {
                 true
         );
 
-        userRepositoryTest.save(user);
+        userRepository.save(user);
 
         Project project = new Project(
                 null,

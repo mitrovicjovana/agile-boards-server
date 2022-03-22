@@ -21,6 +21,16 @@ public interface ProjectRepository extends JpaRepository<Project, UUID> {
 
     void deleteById(UUID id);
 
+    @Query(
+            value = "SELECT * " +
+                    "FROM project p " +
+                    "WHERE p.name " +
+                    "LIKE %:searchTerm% " +
+                    "AND p.owner_username = :username",
+            nativeQuery = true
+    )
+    List<Project> findProjectsBySearchTerm(@Param("searchTerm") String searchTerm, @Param("username") String username);
+
     @Modifying
     @Query(
             value = "UPDATE project p " +
@@ -28,5 +38,5 @@ public interface ProjectRepository extends JpaRepository<Project, UUID> {
                     "WHERE p.project_id = :projectId",
             nativeQuery = true)
     Integer updateNameById(@Param("projectId") UUID id, @Param("name") String name);
-    
+
 }

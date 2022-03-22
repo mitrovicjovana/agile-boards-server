@@ -23,6 +23,17 @@ public class ProjectService {
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
 
+    public List<ProjectDto> findProjectsBySearchTerm(String searchTerm){
+        List<ProjectDto> projects = new ArrayList<>();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        projectRepository.findProjectsBySearchTerm(searchTerm, username)
+                .forEach(project -> {
+                    projects.add(getProjectDto(project));
+                });
+
+        return projects;
+    }
+
     public ProjectDto createProject(CreateProject newProject) {
         User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).get();
 

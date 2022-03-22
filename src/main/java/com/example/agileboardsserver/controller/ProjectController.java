@@ -19,6 +19,11 @@ public class ProjectController {
 
     private final ProjectService projectService;
 
+    @GetMapping("/search")
+    public ResponseEntity<List<ProjectDto>> findProjectsBySearchTerm(@RequestParam("searchTerm") String searchTerm ){
+        return new ResponseEntity<>(projectService.findProjectsBySearchTerm(searchTerm), OK);
+    }
+
     @GetMapping
     public ResponseEntity<List<ProjectDto>> getAllProjectsForUser() {
         return new ResponseEntity<>(projectService.getAllProjects(), OK);
