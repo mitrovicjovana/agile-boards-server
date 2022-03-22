@@ -28,12 +28,5 @@ public interface ProjectRepository extends JpaRepository<Project, UUID> {
                     "WHERE p.project_id = :projectId",
             nativeQuery = true)
     Integer updateNameById(@Param("projectId") UUID id, @Param("name") String name);
-
-    @Modifying
-    @Query(
-            value = "UPDATE project p " +
-                    "SET p.description = :description " +
-                    "WHERE p.project_id = :projectId",
-            nativeQuery = true)
-    Integer updateDescriptionById(@Param("projectId") UUID id, @Param("description") String description);
+    
 }
