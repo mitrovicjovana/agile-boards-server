@@ -17,14 +17,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProjectRepositoryTest {
 
     @Autowired
-    private ProjectRepository projectRepositoryTest;
+    private ProjectRepository underTest;
 
     @Autowired
     private UserRepository userRepository;
 
     @AfterEach
     void tearDown(){
-        projectRepositoryTest.deleteAll();
+        underTest.deleteAll();
     }
 
     @Test
@@ -49,9 +49,9 @@ class ProjectRepositoryTest {
                 user
         );
 
-        UUID projectId = projectRepositoryTest.save(project).getId();
+        UUID projectId = underTest.save(project).getId();
 
-        List<Project> projectList = projectRepositoryTest.findProjectsBySearchTerm("Project", user.getUsername());
+        List<Project> projectList = underTest.findProjectsBySearchTerm("Project", user.getUsername());
 
         assertTrue(projectList.contains(project));
     }
@@ -78,14 +78,14 @@ class ProjectRepositoryTest {
                 user
         );
 
-        UUID projectId = projectRepositoryTest.save(project).getId();
+        UUID projectId = underTest.save(project).getId();
         String newProjectName = "New project name";
 
         project.setName(newProjectName);
 
-        projectRepositoryTest.updateNameById(projectId, newProjectName);
+        underTest.updateNameById(projectId, newProjectName);
 
-        assertEquals(project, projectRepositoryTest.getById(projectId));
+        assertEquals(project, underTest.getById(projectId));
     }
 
     @Test
@@ -110,9 +110,9 @@ class ProjectRepositoryTest {
                 user
         );
 
-       UUID projectId = projectRepositoryTest.save(project).getId();
+       UUID projectId = underTest.save(project).getId();
 
-        assertEquals(project, projectRepositoryTest.findById(projectId).get());
+        assertEquals(project, underTest.findById(projectId).get());
     }
 
     @Test
@@ -135,7 +135,7 @@ class ProjectRepositoryTest {
                 user
         );
 
-        assertThrows(Exception.class, () -> projectRepositoryTest.findById(UUID.randomUUID()).get());
+        assertThrows(Exception.class, () -> underTest.findById(UUID.randomUUID()).get());
     }
 
 }

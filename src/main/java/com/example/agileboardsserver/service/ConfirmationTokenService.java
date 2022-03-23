@@ -2,7 +2,7 @@ package com.example.agileboardsserver.service;
 
 import com.example.agileboardsserver.model.ConfirmationToken;
 import com.example.agileboardsserver.model.User;
-import com.example.agileboardsserver.repository.ConfiramtionTokenRepository;
+import com.example.agileboardsserver.repository.ConfirmationTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ConfirmationTokenService {
 
-    private final ConfiramtionTokenRepository confiramtionTokenRepository;
+    private final ConfirmationTokenRepository confirmationTokenRepository;
 
     public ConfirmationToken generateConfirmationToken(User user) {
         // Generate new token
@@ -25,14 +25,14 @@ public class ConfirmationTokenService {
         confirmationToken.setUser(user);
 
         // Save token
-        return confiramtionTokenRepository.save(confirmationToken);
+        return confirmationTokenRepository.save(confirmationToken);
     }
 
     public Optional<ConfirmationToken> findByToken(String token) {
-        return confiramtionTokenRepository.findByToken(token);
+        return confirmationTokenRepository.findByToken(token);
     }
 
     public void deleteToken(ConfirmationToken confirmationToken) {
-        confiramtionTokenRepository.delete(confirmationToken);
+        confirmationTokenRepository.delete(confirmationToken);
     }
 }
