@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface ConfiramtionTokenRepository extends JpaRepository<ConfirmationToken, UUID> {
+public interface ConfirmationTokenRepository extends JpaRepository<ConfirmationToken, UUID> {
 
     Optional<ConfirmationToken> findByToken(String token);
 }
